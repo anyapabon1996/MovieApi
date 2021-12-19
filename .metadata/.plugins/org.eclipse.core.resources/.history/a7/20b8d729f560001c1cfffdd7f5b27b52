@@ -1,0 +1,46 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Movies;
+import com.example.demo.service.MovieService;
+
+
+@RequestMapping("AnyaApi/v1")
+@RestController
+public class MovieController {
+	
+	//Atributo 
+	private final MovieService movieService; 
+
+	//Contructor 
+	public MovieController(MovieService movieService) {
+		this.movieService = movieService; 
+	}
+	
+	//Ve todas las pelis que hay
+	@GetMapping("/allmovies")
+	public List<Movies> getMovies(){
+		return this.movieService.getMovies();
+	}
+	
+	@PostMapping("/createmovie")
+	public boolean createMovie(@RequestBody Movies movies) {
+		return this.movieService.createMovie(movies);
+	}
+	
+	@DeleteMapping("/deletemovie/{id}")
+	public boolean deleteMovie(@PathVariable Integer id) {
+		return this.movieService.deleteMovie(id);
+	}
+	
+}

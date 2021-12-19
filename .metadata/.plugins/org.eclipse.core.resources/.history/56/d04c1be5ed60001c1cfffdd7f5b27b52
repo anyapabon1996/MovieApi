@@ -1,0 +1,22 @@
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.service.MovieService;
+
+
+@RequestMapping("AnyaApi/v1")
+@RestController
+public class MovieController {
+	
+	//Atributo 
+	private final MovieService movieService; 
+
+	//Contructor 
+	public MovieController(MovieService movieService) {
+		this.movieService = movieService; 
+	}
+	
+	
+}

@@ -1,0 +1,33 @@
+package com.example.demo.model;
+
+import java.io.Serializable;
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@AllArgsConstructor  @NoArgsConstructor 
+public class Movies implements Serializable {
+	
+	private @Setter @Getter Integer id;
+	private @Setter @Getter String title; 
+	private @Setter @Getter double qualification;
+	private @Setter @Getter boolean adultsOnly; 
+	private @Setter @Getter Gender gender; 
+	private @Setter @Getter Classification classification; 
+	private @Setter @Getter Integer premiere; 
+	
+	
+	public boolean setAdultsOnly(boolean adultsOnly) {
+		return this.adultsOnly = adultsOnly;
+	}
+	
+//	public List<Movies> reciveMovies(){
+//		return List.of({1, "Harry Potter", 5.0, false, Fantasy, ATP, 2001},
+//				{}); 
+//	}
+	
+}

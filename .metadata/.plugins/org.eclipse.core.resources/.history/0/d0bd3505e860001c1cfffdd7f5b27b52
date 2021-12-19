@@ -1,0 +1,13 @@
+package com.example.demo.model;
+
+public class Movies {
+	
+	private Integer id;
+	private String title; 
+	private double qualification;
+	private boolean adultsOnly; 
+	private Gender gender; 
+	private Classification classification; 
+	private Integer premiere; 
+	
+}

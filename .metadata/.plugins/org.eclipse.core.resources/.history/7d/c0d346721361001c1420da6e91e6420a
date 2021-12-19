@@ -1,0 +1,221 @@
+package com.example.demo.service;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Iterator;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.Classification;
+import com.example.demo.model.Gender;
+import com.example.demo.model.Message;
+import com.example.demo.model.Movies;
+
+@Service
+public class MovieService {
+
+	//Atributo 
+	private List<Movies> listMovies; 
+	private boolean control; 
+	
+	Movies HarryPoter1 = new Movies(1, "Harry Potter and the sorcerer's stone", 5.0, false, Gender.Fantasy, Classification.ATP, 2001);
+	Movies HarryPoter2 = new Movies(2, "Harry Potter", 5.0, false, Gender.Action, Classification.ATP, 2001);
+
+	
+	Message message1 = new Message();
+	
+	//Constructor 
+	public MovieService (List<Movies> listMovies) {
+		
+		this.listMovies = listMovies; 
+	}
+
+	
+	//Metodo para obtener todas las peliculas
+	public List<Movies> getMovies() {
+		
+//		this.listMovies.add(HarryPoter1);
+//		this.listMovies.add(HarryPoter2);
+		
+		return this.listMovies;
+	}
+	
+	
+	//Metodo para crear una pelicula 
+	public boolean createMovie(Movies movie) {
+		
+		this.control = false; 
+		
+		Iterator <Movies> itr = this.listMovies.iterator();
+		
+		//Recorremos la lista
+		while (itr.hasNext()) {
+			
+			if (itr.next().getId() == movie.getId()) {
+				
+				this.control = true; 
+				
+				break; 
+			}
+		}
+		
+		
+		if (control) {
+			
+			return false;
+			
+		} else {
+			
+			this.listMovies.add(movie);
+			
+			return true; 
+		}
+	}
+	
+
+	//Metodo para eliminar de mi lista
+	public String deleteMovie(Integer id) {
+		
+		this.control = false; 
+
+		//Recorremos lalista 
+		for (Movies movie : this.listMovies) {
+			if (movie.getId() == id) {
+				this.listMovies.remove(movie); 
+				this.control = true; 
+				break; 
+			}
+		} 
+		
+		if (control) return "Successful remove";
+		
+		else return "Not found movie with that ID";
+
+	}
+
+
+	//Metodo para buscar una peli por id
+	public Optional<Movies> getMovieById(Integer id) {
+		
+		Optional <Movies> mo =  null; 
+		
+		//Intentamos buscar nuestra pelicula. En caso de no hallar, la deja vacia 
+		try {
+			mo = Optional.ofNullable(this.listMovies.stream().filter(m -> m.getId() == id).findFirst().get());
+			
+		//En caso de que no se halle la peli solicitada, se le tira este error al usuario.
+		} catch (NoSuchElementException nsee) {
+			
+			//this.message1.logMessage(1); -> Tiene un error.
+			System.out.println("you've putted a not existent id into our data bases");
+			System.out.print(nsee.getCause());
+		}
+		
+		return mo;
+	}
+
+
+	//Metodo que busca peliculas por genero. 
+	public List<Movies> getMoviesByGender(Gender gender) {
+		
+			List <Movies> listByGender = this.listMovies.
+					stream().
+					filter(m -> m.getGender().equals(gender)).
+					collect(Collectors.toList());
+			
+			return listByGender;
+	}
+	
+	
+	//Funcion que busca por nombre una pelicula
+	public Optional<Movies> getMovieByTitle(String title){
+				
+//		title = title.toLowerCase().trim();
+		
+		System.out.println(title);
+		
+		if ((title.toLowerCase().trim()).equals(this.listMovies.get(0).getTitle().toLowerCase())) System.out.println(4);
+
+		Optional<Movies> mo = null; 
+		
+		try {
+			
+			mo = Optional.ofNullable(this.listMovies.
+					stream().
+					filter(m -> (m.getTitle().toLowerCase()).equals(title.toLowerCase().trim())).
+					findFirst().
+					get());
+			
+		} catch (NoSuchElementException nsee) {
+			
+			System.out.println("You're looking for an unexisting movie");
+			System.out.print(nsee.getCause());
+		}
+		return mo;
+		
+	}
+
+
+	public List<Movies> getMoviesByClassification(Classification classify) {
+		
+		//Buscamos las pelis de esta clasificacion
+		List <Movies> listByClassify = this.listMovies.
+				stream().
+				filter(m -> m.getClassification().equals(classify)).
+				collect(Collectors.toList());
+		
+		return listByClassify;
+		
+	}
+	
+	public Optional<Movies> updateMovie(Integer id, Movies movies){
+		
+		Optional<Movies> mo = null;
+		
+		try {
+			
+			mo = Optional.ofNullable(
+					this.listMovies.
+					stream().
+					filter(m -> m.getId() == id).
+					findFirst().
+					get());
+			
+		} catch (NoSuchElementException nsee) {
+			
+			//this.message1.logMessage(1); -> Tiene un error.
+			System.out.println("you've putted a not existent id into our data bases");
+			System.out.print(nsee.getCause());
+			
+			return null;
+		}
+	
+			
+		for (int i = 0; i<this.listMovies.size(); i++) {
+				
+			if (this.listMovies.get(i).getId() == id) {
+				
+//				this.listMovies.get(i).setClassification(movies.getClassification());
+//				this.listMovies.get(i).setGender(movies.getGender());
+//				this.listMovies.get(i).setPremiere(movies.getPremiere());
+//				this.listMovies.get(i).setQualification(movies.getQualification());
+//				this.listMovies.get(i).setTitle(movies.getTitle());
+				
+				this.listMovies.remove(i);
+				this.listMovies.add(i, movies);
+			}
+		}
+		
+		return mo;
+	}
+	
+	
+	
+	
+	//Metodo para actualizar
+	
+	
+	
+}
