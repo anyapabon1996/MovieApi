@@ -92,6 +92,11 @@ public class MovieController {
 		return this.movieService.ranking();
 	}
 	
+	@GetMapping("/mostviewsmovies")
+	public List<Movies> mostViews(){
+		return this.movieService.mostViews();
+	}
+	
 	
 	
 	

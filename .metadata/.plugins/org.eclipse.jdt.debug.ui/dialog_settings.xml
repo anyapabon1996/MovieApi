@@ -8,4 +8,10 @@
 		<item key="SashWeightTree" value="200"/>
 		<item key="SashWeightDetails" value="200"/>
 	</section>
+	<section name="conditionHistory">
+	</section>
+	<section name="AddExceptionDialog">
+		<item key="caughtChecked" value="true"/>
+		<item key="uncaughtChecked" value="true"/>
+	</section>
 </section>
