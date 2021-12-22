@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 
 import lombok.AllArgsConstructor;

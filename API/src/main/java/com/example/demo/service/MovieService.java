@@ -5,11 +5,13 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Classification;
+import com.example.demo.model.ComparatorMovies;
 import com.example.demo.model.Gender;
 import com.example.demo.model.Message;
 import com.example.demo.model.Movies;
@@ -46,6 +48,10 @@ public class MovieService {
 //		this.listMovies.add(HarryPoter1);
 //		this.listMovies.add(HarryPoter2);
 		
+		//Ordena de modo creciente la lista.
+		//Esto es, a la lista, le aplica el método comparator que yo hice. 
+		Collections.sort(this.listMovies, new ComparatorMovies());
+				
 		return this.listMovies;
 	}
 	
@@ -151,7 +157,8 @@ public class MovieService {
 		//En caso de que no se halle la peli solicitada, se le tira este error al usuario.
 		} catch (NoSuchElementException nsee) {
 			
-			//this.message1.logMessage(1); -> Tiene un error.
+			//-> Tiene un error.
+			message1.logMessage(1); 
 			System.out.println("you've putted a not existent id into our data bases");
 			System.out.print(nsee.getCause());
 		}
